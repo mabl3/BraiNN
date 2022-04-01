@@ -1,0 +1,10 @@
+{
+    "epochs": [30],
+    "initializers": ["he_normal"],
+    "metrics": [["BinaryAccuracy"]],
+    "model": [
+		 [{"class_name": "Flatten", "config": {}}]
+    ],
+    "loss": ["binary_crossentropy"],
+    "optimizer": [{"class_name": "adam", "config": {"learning_rate": 0.0001}}]    
+}

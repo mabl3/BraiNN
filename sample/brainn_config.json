@@ -1,0 +1,17 @@
+{
+    "epochs": [100],
+    "initializers": ["he_normal"],
+    "metrics": [["BinaryAccuracy"]],
+    "model": [
+		 [{"class_name": "MaxPool3D", "config": {"pool_size": "(6,6,6)", "strides": "(6,6,6)"}},
+		 {"class_name": "Conv3D", "config": {"filters": 32, "kernel_size": "(7,7,7)", "strides": "(1,1,1)", "activation": "\"linear\"", "kernel_initializer": "initializer"}},
+		 {"class_name": "PReLU", "config": {}},
+		 {"class_name": "MaxPool3D", "config": {"pool_size": "(2,2,2)", "strides": "(2,2,2)"}},
+		 {"class_name": "Flatten", "config": {}},
+		 {"class_name": "Dense", "config": {"units": 128, "activation": "\"linear\"", "kernel_initializer": "initializer"}},
+		 {"class_name": "PReLU", "config": {}},
+         {"class_name": "Dropout", "config": {"rate": 0.5}}]
+    ],
+    "loss": ["binary_crossentropy"],
+    "optimizer": [{"class_name": "adam", "config": {"learning_rate": 0.0001}}]    
+}
