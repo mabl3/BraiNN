@@ -1,6 +1,8 @@
 # BraiNN
 Convolutional Neural Network for classifying sex from MRI
 
+Find the preprint of the related paper here: https://medrxiv.org/cgi/content/short/2022.04.27.22274355v1
+
 ### Project Overview
 
 * `brainn.py` Use this script to train BraiNN on your data and to make predictions
