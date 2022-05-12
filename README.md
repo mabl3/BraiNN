@@ -9,7 +9,7 @@ Find the preprint of the related paper here: https://medrxiv.org/cgi/content/sho
 * `helper/createDataset.py` Helper module to create TensorFlow data sets
 * `sample/brainn_config.json` Configuration file for BraiNN model
 * `sample/logreg_config.json` Configuration file for LogReg model
-* `sample/sample_GMV.[nii|pickle4.gz]` Preprocessed example brain (only GMV) in Nifty format and as pickled Numpy array
+* `sample/sample_GMV.[nii|pickle4.gz]` Preprocessed example brain (only GMV) in NifTi format and as pickled Numpy array
 
 ## Usage
 
