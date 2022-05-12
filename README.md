@@ -9,6 +9,7 @@ Find the preprint of the related paper here: https://medrxiv.org/cgi/content/sho
 * `helper/createDataset.py` Helper module to create TensorFlow data sets
 * `sample/brainn_config.json` Configuration file for BraiNN model
 * `sample/logreg_config.json` Configuration file for LogReg model
+* `sample/sample_GMV.[nii|pickle4.gz]` Preprocessed example brain (only GMV) in Nifty format and as pickled Numpy array
 
 ## Usage
 
@@ -44,6 +45,10 @@ The values in `path` must be valid paths to the respective pickled and gzipped n
 #### Using ROI Masks
 
 If you specify mask(s) via the `--roi` command line argument, each image is multiplied with the mask before training and prediction. If you specify more than one mask, a full training round will be performed for each mask.
+
+#### Example Scan
+
+The directory `sample/` contains a MRI scan of a brain that has been preprocessed as described in the publication for reference. Note that this image was not yet Z-score normalized, but all other preprocessing steps have been performed. The true class of this brain is "male".
 
 ### Run Training
 
