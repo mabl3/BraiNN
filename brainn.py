@@ -203,7 +203,6 @@ else:
                 innerValset = outerTrainset.loc[ind2]
                 innerTrainset = outerTrainset.loc[outerTrainset.index.difference(ind2)]
                 dataset['inner'].append({'valset': innerValset, 'trainset': innerTrainset})
-
         else:
             dataset = {'testset': outerTestset, 'trainset': outerTrainset} # no valset for k-CV
 
@@ -267,7 +266,7 @@ def createParameterDicts(currentDictRef, parameterDictRef, parameterDictListRef)
         values = parameterDict[key]
         parameterDict.pop(key)  # remove key for recursion
         for value in values:
-            currentDict[key] = value                    
+            currentDict[key] = value
             createParameterDicts(currentDict, parameterDict, parameterDictListRef) # recursion
                 
     else:
@@ -468,7 +467,7 @@ resultDict = {'accuracy': [],
 predictionDict = {'test': {},
                   'cross_population': {'true': list()}}
 if dfCrossPop is not None:
-    predictionDict["cross_population"]["true"] = (np.array(dfCrossPop['sex'])-1).tolist() 
+    predictionDict["cross_population"]["true"] = (np.array(dfCrossPop['sex'])-1).tolist()
 
 
 
@@ -481,7 +480,7 @@ for roiKey in rois: # if no ROI were specified, this is "noroi" and no ROI mask 
         print("[INFO] >>> Starting run on parameter configuration", (gridIdx+1), "/", len(parameterList), "at", ts, 
               flush = True)
 
-        # 'accuracy' key in history varies given the accuracy measure 
+        # 'accuracy' key in history varies given the accuracy measure
         #   (e.g. it's 'binary_accuracy' for BinaryAccuracy metric)
         #   For now, hardcode this
         acckey = 'binary_accuracy' if "BinaryAccuracy" in parameters['metrics'] else "accuracy"
@@ -496,10 +495,10 @@ for roiKey in rois: # if no ROI were specified, this is "noroi" and no ROI mask 
             if dfTest is not None:
                 dfTest.to_csv(os.path.join(outpath, outfileBase + "_testset.csv"), index=False)
 
-            train_ds, val_ds, test_ds, crossPop_ds = createDatasets(batchSize = grid['batchsize'][0], mask = roi, 
-                                                                    dfTrain = dfTrain, dfVal = dfVal, dfTest = dfTest, 
+            train_ds, val_ds, test_ds, crossPop_ds = createDatasets(batchSize = grid['batchsize'][0], mask = roi,
+                                                                    dfTrain = dfTrain, dfVal = dfVal, dfTest = dfTest,
                                                                     dfCrossPop = dfCrossPop)
-            
+
             # quick check that not all elements are the same
             checkElems = [x[0][0] for x in train_ds.take(1)]
             checkElems.extend([x[0][0] for x in val_ds.take(1)])
@@ -578,9 +577,9 @@ for roiKey in rois: # if no ROI were specified, this is "noroi" and no ROI mask 
                                 cpLoss, cpAcc, cpPred = runGrid(parameters = parameters,
                                                                 gridIdx = lkInd,
                                                                 train_ds = train_ds,
-                                                                val_ds = val_ds, 
-                                                                valSize = len(ids['valset'].index), 
-                                                                test_ds = test_ds, 
+                                                                val_ds = val_ds,
+                                                                valSize = len(ids['valset'].index),
+                                                                test_ds = test_ds,
                                                                 crossPop_ds = crossPop_ds)
 
                         bestHistoryDF = historyDF[historyDF['val_loss'] == min(historyDF['val_loss'])]
@@ -592,7 +591,7 @@ for roiKey in rois: # if no ROI were specified, this is "noroi" and no ROI mask 
                         resultDict['val_loss'].append(bestHistoryDF.iloc[0]['val_loss'])
                         resultDict['test_accuracy'].append(testAcc)
                         resultDict['test_loss'].append(testLoss)
-                        predictionDict["test"][lkInd] = {'true': (np.array(dataset['testset']['sex'])-1).tolist(), 
+                        predictionDict["test"][lkInd] = {'true': (np.array(dataset['testset']['sex'])-1).tolist(),
                                                          'pred': testPred}
                         if crossPop_ds is not None:
                             resultDict['cross_population_accuracy'].append(cpAcc)
@@ -617,17 +616,17 @@ for roiKey in rois: # if no ROI were specified, this is "noroi" and no ROI mask 
                         lcount += 1
 
                 else: # only k-cross-validation without validation set
-                    train_ds, _, test_ds, crossPop_ds = createDatasets(batchSize = grid['batchsize'][0], mask = roi, 
-                                                                       dfTrain = dataset['trainset'], dfVal = None, 
-                                                                       dfTest = dataset['testset'], 
+                    train_ds, _, test_ds, crossPop_ds = createDatasets(batchSize = grid['batchsize'][0], mask = roi,
+                                                                       dfTrain = dataset['trainset'], dfVal = None,
+                                                                       dfTest = dataset['testset'],
                                                                        dfCrossPop = dfCrossPop)
 
                     # perform training and predictions
                     modelconf, modelSummaryStr, historyDF, duration, \
-                        testLoss, testAcc, testPred, cpLoss, cpAcc, cpPred = runGrid(parameters = parameters, 
+                        testLoss, testAcc, testPred, cpLoss, cpAcc, cpPred = runGrid(parameters = parameters,
                                                                                      gridIdx = kInd,
-                                                                                     train_ds = train_ds, 
-                                                                                     test_ds = test_ds, 
+                                                                                     train_ds = train_ds,
+                                                                                     test_ds = test_ds,
                                                                                      crossPop_ds = crossPop_ds)
 
                     bestHistoryDF = historyDF[historyDF['loss'] == min(historyDF['loss'])]
@@ -639,7 +638,7 @@ for roiKey in rois: # if no ROI were specified, this is "noroi" and no ROI mask 
                     resultDict['val_loss'].append("")
                     resultDict['test_accuracy'].append(testAcc)
                     resultDict['test_loss'].append(testLoss)
-                    predictionDict["test"][kInd] = {'true': (np.array(dataset['testset']['sex'])-1).tolist(), 
+                    predictionDict["test"][kInd] = {'true': (np.array(dataset['testset']['sex'])-1).tolist(),
                                                     'pred': testPred}
                     if crossPop_ds is not None:
                         resultDict['cross_population_accuracy'].append(cpAcc)
@@ -673,9 +672,9 @@ for roiKey in rois: # if no ROI were specified, this is "noroi" and no ROI mask 
 
         tsEnd = datetime.datetime.now()
         tsDuration = tsEnd - ts
-        print("[INFO] >>> run on parameter configuration", (gridIdx+1), "/", len(parameterList), "finished", tsEnd, 
+        print("[INFO] >>> run on parameter configuration", (gridIdx+1), "/", len(parameterList), "finished", tsEnd,
               flush = True)
-        print("[INFO] >>> run on parameter configuration", (gridIdx+1), "/", len(parameterList), "took", tsDuration, 
+        print("[INFO] >>> run on parameter configuration", (gridIdx+1), "/", len(parameterList), "took", tsDuration,
               flush = True)
 
         gridIdx += 1
